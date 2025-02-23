@@ -13,6 +13,7 @@ enum CustomError: Error {
 
 protocol NetworkManagerProtocol: AnyObject {
     func get<T: Codable>(url: String) async throws -> T
+    func downloadImageData(from urlString: String) async -> Data?
 }
 
 final class NetworkManager: NetworkManagerProtocol {
@@ -28,6 +29,16 @@ final class NetworkManager: NetworkManagerProtocol {
             return decoded
         } catch {
             throw error
+        }
+    }
+    
+    func downloadImageData(from urlString: String) async -> Data? {
+        guard let url = URL(string: urlString) else { return nil }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return data
+        } catch {
+            return nil
         }
     }
 }
