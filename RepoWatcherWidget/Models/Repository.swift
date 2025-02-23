@@ -16,16 +16,6 @@ struct Repository: Codable {
     let openIssues: Int
     let pushedAt: String
     var avatarData: Data = Data()
-    
-    static let placeholder = Repository(
-        name: "Your Repo",
-        owner: Owner(avatarUrl: ""),
-        hasIssues: true,
-        forks: 65,
-        watchers: 123,
-        openIssues: 55,
-        pushedAt: "2024-08-09T18:19:30Z"
-    )
 }
 
 extension Repository {

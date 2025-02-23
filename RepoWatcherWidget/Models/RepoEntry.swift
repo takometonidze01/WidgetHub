@@ -11,4 +11,5 @@ import Foundation
 struct RepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
+    let bottomRepo: Repository?
 }

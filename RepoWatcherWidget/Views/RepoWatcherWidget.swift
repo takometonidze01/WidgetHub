@@ -10,11 +10,11 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> RepoEntry {
-        RepoEntry(date: Date(), repo: Repository.placeholder)
+        RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
     }
     
     func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
-        let entry = RepoEntry(date: Date(), repo: Repository.placeholder)
+        let entry = RepoEntry(date: Date(), repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
         completion(entry)
     }
     
@@ -25,8 +25,17 @@ struct Provider: TimelineProvider {
             do {
                 var repo: Repository = try await NetworkManager().get(url: RepoURL.swiftAlgorithms)
                 let avatarImageData = await NetworkManager().downloadImageData(from: repo.owner.avatarUrl)
-                let entry = RepoEntry(date: .now, repo: repo)
                 repo.avatarData = avatarImageData ?? Data()
+                //Get Bottom repo if in large widget
+                var bottomRepo: Repository?
+                if context.family == .systemLarge {
+                    bottomRepo = try await NetworkManager().get(url: RepoURL.google)
+                    let avatarImageData = await NetworkManager().downloadImageData(from: bottomRepo?.owner.avatarUrl ?? "")
+                    bottomRepo?.avatarData = avatarImageData ?? Data()
+                }
+                
+                //Create entry $ timeline
+                let entry = RepoEntry(date: .now, repo: repo, bottomRepo: bottomRepo)
                 let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
                 completion(timeline)
             } catch {
@@ -45,9 +54,11 @@ struct RepoWatcherWidgetEntryView : View {
         case .systemMedium:
             RepoMediumView(repo: entry.repo)
         case .systemLarge:
-            VStack(spacing: 36) {
+            VStack(spacing: 50) {
                 RepoMediumView(repo: entry.repo)
-                RepoMediumView(repo: entry.repo)
+                if let bottomRepo = entry.bottomRepo {
+                    RepoMediumView(repo: bottomRepo)
+                }
             }
         case .systemExtraLarge, .systemSmall, .accessoryCircular, .accessoryRectangular, .accessoryInline:
             EmptyView()
@@ -80,5 +91,5 @@ struct RepoWatcherWidget: Widget {
 #Preview(as: .systemLarge) {
     RepoWatcherWidget()
 } timeline: {
-    RepoEntry(date: .now, repo: Repository.placeholder)
+    RepoEntry(date: .now, repo: MockData.repoOne, bottomRepo: MockData.repoTwo)
 }
