@@ -12,12 +12,12 @@ struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> RepoEntry {
         RepoEntry(date: Date(), repo: Repository.placeholder, avatarImageData: Data())
     }
-
+    
     func getSnapshot(in context: Context, completion: @escaping (RepoEntry) -> ()) {
         let entry = RepoEntry(date: Date(), repo: Repository.placeholder, avatarImageData: Data())
         completion(entry)
     }
-
+    
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         Task {
             let nextUpdate = Date().addingTimeInterval(43200) // 12 hours in seconds
@@ -33,12 +33,6 @@ struct Provider: TimelineProvider {
             }
         }
     }
-}
-
-struct RepoEntry: TimelineEntry {
-    let date: Date
-    let repo: Repository
-    let avatarImageData: Data
 }
 
 struct RepoWatcherWidgetEntryView : View {
@@ -121,20 +115,4 @@ struct RepoWatcherWidget: Widget {
 } timeline: {
     RepoEntry(date: .now, repo: Repository.placeholder, avatarImageData: Data())
     RepoEntry(date: .now, repo: Repository.placeholder, avatarImageData: Data())
-}
-
-struct StatLabel: View {
-    let value: Int
-    let systemImageName: String
-    
-    var body: some View {
-        Label {
-            Text("\(value)")
-                .font(.footnote)
-        } icon: {
-            Image(systemName: "\(systemImageName)")
-                .foregroundColor(.green)
-        }
-        .fontWeight(.medium)
-    }
 }

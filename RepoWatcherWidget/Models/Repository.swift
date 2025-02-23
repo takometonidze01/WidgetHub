@@ -36,14 +36,6 @@ extension Repository {
     }
 }
 
-struct Owner: Codable {
-    let avatarUrl: String
-    
-    enum CodingKeys: String, CodingKey {
-        case avatarUrl = "avatar_url"
-    }
-}
-
 enum RepoURL {
     static let swiftAlgorithms = "https://api.github.com/repos/Apple/swift-algorithms"
     static let publish = "https://api.github.com/repos/johnsundell/publish"

@@ -88,6 +88,15 @@
 			);
 			target = 031562F32D6B5EDE00D6F9D3 /* RepoWatcherWidgetExtension */;
 		};
+		031563102D6B847900D6F9D3 /* Exceptions for "RepoWatcherWidget" folder in "WidgetHub" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Models/Owner.swift,
+				Models/RepoEntry.swift,
+				Views/StatLabelView.swift,
+			);
+			target = 031562AF2D6B544300D6F9D3 /* WidgetHub */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -111,6 +120,7 @@
 		031562F72D6B5EDE00D6F9D3 /* RepoWatcherWidget */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
+				031563102D6B847900D6F9D3 /* Exceptions for "RepoWatcherWidget" folder in "WidgetHub" target */,
 				031563052D6B5EDF00D6F9D3 /* Exceptions for "RepoWatcherWidget" folder in "RepoWatcherWidgetExtension" target */,
 			);
 			path = RepoWatcherWidget;
