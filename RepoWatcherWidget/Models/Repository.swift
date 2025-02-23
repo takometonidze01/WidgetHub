@@ -15,6 +15,7 @@ struct Repository: Codable {
     let watchers: Int
     let openIssues: Int
     let pushedAt: String
+    var avatarData: Data = Data()
     
     static let placeholder = Repository(
         name: "Your Repo",

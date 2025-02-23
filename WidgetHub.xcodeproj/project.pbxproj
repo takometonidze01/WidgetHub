@@ -92,7 +92,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/Owner.swift,
-				Models/RepoEntry.swift,
 				Views/StatLabelView.swift,
 			);
 			target = 031562AF2D6B544300D6F9D3 /* WidgetHub */;

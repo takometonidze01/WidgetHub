@@ -6,9 +6,9 @@
 //
 
 import WidgetKit
+import Foundation
 
 struct RepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
-    let avatarImageData: Data
 }
