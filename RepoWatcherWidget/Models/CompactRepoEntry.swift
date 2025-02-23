@@ -8,7 +8,7 @@
 import WidgetKit
 import Foundation
 
-struct RepoEntry: TimelineEntry {
+struct CompactRepoEntry: TimelineEntry {
     let date: Date
     let repo: Repository
     let bottomRepo: Repository?
