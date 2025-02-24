@@ -21,6 +21,7 @@ struct RepoMediumView: View {
                 HStack {
                     Image(uiImage: UIImage(data: repo.avatarData) ?? UIImage(named: "avatar")!)
                         .resizable()
+                        .widgetAccentedRenderingMode(.accented)
                         .frame(width: 50, height: 50)
                         .clipShape(.circle)
                     Text("\(repo.name)")
@@ -28,6 +29,7 @@ struct RepoMediumView: View {
                         .fontWeight(.semibold)
                         .minimumScaleFactor(0.6)
                         .lineLimit(1)
+                        .widgetAccentable()
                 }
                 .padding(.bottom, 6)
                 
@@ -50,6 +52,7 @@ struct RepoMediumView: View {
                     .minimumScaleFactor(0.6)
                     .lineLimit(1)
                     .foregroundColor(daysSinceLastActivity > 50 ? .pink : .green)
+                    .widgetAccentable()
                 
                 Text("days ago")
                     .font(.caption2)
@@ -57,6 +60,7 @@ struct RepoMediumView: View {
             }
         }
         .containerBackground(for: .widget) { }
+        .widgetAccentable()
     }
     
     func calculateDaysSinceLastActivity(from dateString: String) -> Int {
