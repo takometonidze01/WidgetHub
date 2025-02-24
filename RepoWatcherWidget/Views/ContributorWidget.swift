@@ -52,6 +52,7 @@ struct ContributorEntryView : View {
             RepoMediumView(repo: entry.repo)
             ContributorMediumView(repo: entry.repo)
         }
+        .containerBackground(for: .widget) { }
     }
 }
 

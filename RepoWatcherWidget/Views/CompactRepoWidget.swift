@@ -53,6 +53,7 @@ struct CompactRepoWidgetEntryView : View {
         switch family {
         case .systemMedium:
             RepoMediumView(repo: entry.repo)
+                .containerBackground(for: .widget) { }
         case .systemLarge:
             VStack(spacing: 50) {
                 RepoMediumView(repo: entry.repo)
@@ -60,6 +61,7 @@ struct CompactRepoWidgetEntryView : View {
                     RepoMediumView(repo: bottomRepo)
                 }
             }
+            .containerBackground(for: .widget) { }
         case .systemExtraLarge, .systemSmall, .accessoryCircular, .accessoryRectangular, .accessoryInline:
             EmptyView()
         @unknown default:

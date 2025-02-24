@@ -56,6 +56,7 @@ struct RepoMediumView: View {
                     .foregroundColor(.secondary)
             }
         }
+        .containerBackground(for: .widget) { }
     }
     
     func calculateDaysSinceLastActivity(from dateString: String) -> Int {
