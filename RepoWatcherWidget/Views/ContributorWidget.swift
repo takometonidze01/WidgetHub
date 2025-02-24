@@ -10,31 +10,48 @@ import SwiftUI
 
 struct ContributorProvider: TimelineProvider {
     func placeholder(in context: Context) -> ContributorEntry {
-        ContributorEntry(date: Date())
+        ContributorEntry(date: Date(), repo: MockData.repoOne)
     }
     
     func getSnapshot(in context: Context, completion: @escaping @Sendable (ContributorEntry) -> Void) {
-        let entry = ContributorEntry(date: Date())
+        let entry = ContributorEntry(date: Date(), repo: MockData.repoOne)
         completion(entry)
     }
     
     func getTimeline(in context: Context, completion: @escaping @Sendable (Timeline<ContributorEntry>) -> Void) {
-        let entry = ContributorEntry(date: .now)
         let nextUpdate = Date().addingTimeInterval(43200)
-        let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
-        completion(timeline)
-    }
-}
+        let url = RepoURL.google
 
-struct ContributorEntry: TimelineEntry {
-    var date: Date
+        Task {
+            var repo: Repository = try await NetworkManager().get(url: url)
+            let repoAvatar = await NetworkManager().downloadImageData(from: repo.owner.avatarUrl)
+            repo.avatarData = repoAvatar ?? Data()
+
+            let contributors: [Contributor] = try await NetworkManager().get(url: "\(url)/contributors")
+            var topFour = Array(contributors.prefix(4))
+            
+            for i in topFour.indices {
+                let avatarData = await NetworkManager().downloadImageData(from: topFour[i].avatarUrl)
+                topFour[i].avatarData = avatarData ?? Data()
+            }
+            
+            repo.contributors = topFour
+    
+            let entry = ContributorEntry(date: .now, repo: repo)
+            let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
+            completion(timeline)
+        }
+    }
 }
 
 struct ContributorEntryView : View {
     var entry: ContributorEntry
 
     var body: some View {
-        Text(entry.date.formatted())
+        VStack(spacing: 40) {
+            RepoMediumView(repo: entry.repo)
+            ContributorMediumView(repo: entry.repo)
+        }
     }
 }
 
@@ -62,5 +79,5 @@ struct ContributorRepoWidget: Widget {
 #Preview(as: .systemLarge) {
     ContributorRepoWidget()
 } timeline: {
-    ContributorEntry(date: .now)
+    ContributorEntry(date: .now, repo: MockData.repoOne)
 }

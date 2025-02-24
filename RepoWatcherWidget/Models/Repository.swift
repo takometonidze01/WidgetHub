@@ -16,6 +16,7 @@ struct Repository: Codable {
     let openIssues: Int
     let pushedAt: String
     var avatarData: Data = Data()
+    var contributors: [Contributor] = []
 }
 
 extension Repository {

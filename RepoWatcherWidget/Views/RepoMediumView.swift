@@ -64,10 +64,3 @@ struct RepoMediumView: View {
         return daysSinceLastActivity
     }
 }
-
-
-//#Preview(as: .systemMedium) {
-//    RepoMediumView(repo: <#Repository#>)
-//} timeline: {
-//    
-//}

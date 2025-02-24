@@ -15,7 +15,13 @@ struct MockData {
         forks: 65,
         watchers: 123,
         openIssues: 55,
-        pushedAt: "2024-08-09T18:19:30Z"
+        pushedAt: "2024-08-09T18:19:30Z",
+        contributors: [
+            Contributor(login: "Sean Allen", avatarUrl: "", contributions: 42, avatarData: Data()),
+            Contributor(login: "Tako Metonidze", avatarUrl: "", contributions: 23, avatarData: Data()),
+            Contributor(login: "Michael Jordan", avatarUrl: "", contributions: 11, avatarData: Data()),
+            Contributor(login: "LeBron", avatarUrl: "", contributions: 221, avatarData: Data())
+        ]
     )
     
     static let repoTwo = Repository(
